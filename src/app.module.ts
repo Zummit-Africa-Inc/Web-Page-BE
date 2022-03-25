@@ -9,6 +9,37 @@ import { WaitlistModule } from './waitlist/waitlist.module';
 import { configConstant } from './common/constants/config.constant';
 
 
+// @Module({
+//   imports: [
+//     ApplicantsModule,
+//     WaitlistModule,
+//     InternshipCategoryModule,
+//     ConfigModule.forRoot({ isGlobal: true }),
+//     TypeOrmModule.forRootAsync({
+//       imports: [ConfigModule],
+//       useFactory: (configService: ConfigService) => ({
+//         type: "postgres",
+//         host: configService.get<string>("POSTGRES_HOST"),
+//         port: configService.get<number>("POSTGRES_PORT"),
+//         username: configService.get("POSTGRES_USER"),
+//         password: configService
+//           .get<string>("POSTGRES_PASSWORD")
+//           ?.toString(),
+//         database: configService.get<string>('POSTGRES_USER'),
+//         // entities: [__dirname + "/**/*.entity{.ts,.js}"],
+//         autoLoadEntities: true,
+//         synchronize: true,
+//       }),
+//       inject: [ConfigService],
+//     }),
+//   ],
+//   controllers: [AppController],
+//   providers: [AppService],
+// })
+// export class AppModule {}
+
+
+
 @Module({
   imports: [
     ApplicantsModule,
@@ -19,13 +50,13 @@ import { configConstant } from './common/constants/config.constant';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         type: "postgres",
-        host: configService.get<string>("POSTGRES_HOST"),
-        port: configService.get<number>("POSTGRES_PORT"),
-        username: configService.get("POSTGRES_USER"),
+        host: configService.get(configConstant.database.host),
+        port: configService.get(configConstant.database.port),
+        username: configService.get(configConstant.database.username),
         password: configService
-          .get<string>("POSTGRES_PASSWORD")
+          .get<string>(configConstant.database.password)
           ?.toString(),
-        database: configService.get<string>('POSTGRES_USER'),
+        database: configService.get(configConstant.database.name),
         // entities: [__dirname + "/**/*.entity{.ts,.js}"],
         autoLoadEntities: true,
         synchronize: true,
@@ -37,34 +68,3 @@ import { configConstant } from './common/constants/config.constant';
   providers: [AppService],
 })
 export class AppModule {}
-
-
-
-// @Module({
-//   imports: [
-//     ApplicantsModule,
-//     WaitlistModule,
-//     InternshipCategoryModule,
-//     ConfigModule.forRoot({ isGlobal: true }),
-//     TypeOrmModule.forRootAsync({
-//       imports: [ConfigModule],
-//       useFactory: (configService: ConfigService) => ({
-//         type: "postgres",
-//         host: configService.get(configConstant.database.host),
-//         port: configService.get(configConstant.database.port),
-//         username: configService.get(configConstant.database.username),
-//         password: configService
-//           .get<string>(configConstant.database.password)
-//           ?.toString(),
-//         database: configService.get(configConstant.database.name),
-//         // entities: [__dirname + "/**/*.entity{.ts,.js}"],
-//         autoLoadEntities: true,
-//         synchronize: false,
-//       }),
-//       inject: [ConfigService],
-//     }),
-//   ],
-//   controllers: [AppController],
-//   providers: [AppService],
-// })
-// export class AppModule {}

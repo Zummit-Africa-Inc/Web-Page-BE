@@ -23,9 +23,7 @@ export class InternshipCategoryService {
     async findOneByCatergoryName(categoryName: string): Promise<InternshipCategory> {
         return await this.internshipCategoryRepository.findOne({
             where:{ categoryName },
-            relations: { waiting: {
-                email: true
-            } }
+            relations: { waiting: true }
         })
     }
 
