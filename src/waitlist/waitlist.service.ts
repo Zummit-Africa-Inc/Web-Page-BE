@@ -3,7 +3,6 @@ import { Waitlist } from "./waitlist.entity"
 import { InjectRepository } from "@nestjs/typeorm"
 import { Repository } from "typeorm"
 import { WaitlistDto } from "./dto/waitlist.dto"
-// import { InternshipCategory } from "src/intershipCategories/intershipCategory.entity"
 
 @Injectable()
 export class WaitlistsService {
