@@ -22,7 +22,7 @@ export class InternshipCategoryContoller {
   
     }
   
-    @Get('/id/:id')
+    @Get('/:id')
     async showOneCategorybyId(
       @Param('id', new ParseUUIDPipe()) id: string,
     ) {
@@ -32,7 +32,6 @@ export class InternshipCategoryContoller {
   
     @Get('name')
     async showOneCategoryByName(
-      // @Param('one-category', new ParseUUIDPipe()) catId: string,
       @Body() internshipCategory: InternshipCategoryDto
   
     ) {

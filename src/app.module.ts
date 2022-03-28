@@ -3,7 +3,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ApplicantsModule } from './applicants/applicant.module';
 import { InternshipCategoryModule } from './intershipCategories/internshipCategory.module';
 import { WaitlistModule } from './waitlist/waitlist.module';
 import { configConstant } from './common/constants/config.constant';
@@ -11,7 +10,6 @@ import { configConstant } from './common/constants/config.constant';
 
 @Module({
   imports: [
-    ApplicantsModule,
     WaitlistModule,
     InternshipCategoryModule,
     ConfigModule.forRoot({ isGlobal: true }),
