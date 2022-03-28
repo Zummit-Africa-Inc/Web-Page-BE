@@ -7,7 +7,8 @@ import { ApplicantsModule } from './applicants/applicant.module';
 import { InternshipCategoryModule } from './intershipCategories/internshipCategory.module';
 import { WaitlistModule } from './waitlist/waitlist.module';
 import { configConstant } from './common/constants/config.constant';
-
+import { InternshipCategoryContoller } from './intershipCategories/internshipCategories.controllers';
+import { WaitlistController } from './waitlist/waitlist.controllers';
 
 // @Module({
 //   imports: [
@@ -64,7 +65,7 @@ import { configConstant } from './common/constants/config.constant';
       inject: [ConfigService],
     }),
   ],
-  controllers: [AppController],
+  controllers: [AppController, InternshipCategoryContoller, WaitlistController],
   providers: [AppService],
 })
 export class AppModule {}
