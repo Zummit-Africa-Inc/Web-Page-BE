@@ -3,10 +3,15 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { InternshipCategoryModule } from './intershipCategories/internshipCategory.module';
+import { WaitlistModule } from './waitlist/waitlist.module';
 import { configConstant } from './common/constants/config.constant';
+
 
 @Module({
   imports: [
+    WaitlistModule,
+    InternshipCategoryModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -19,8 +24,9 @@ import { configConstant } from './common/constants/config.constant';
           .get<string>(configConstant.database.password)
           ?.toString(),
         database: configService.get(configConstant.database.name),
-        entities: [__dirname + "/**/*.entity{.ts,.js}"],
-        synchronize: false
+        // entities: [__dirname + "/**/*.entity{.ts,.js}"],
+        autoLoadEntities: true,
+        synchronize: true,
       }),
       inject: [ConfigService],
     }),
