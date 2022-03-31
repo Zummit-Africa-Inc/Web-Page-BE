@@ -1,4 +1,4 @@
-import { InternshipCategory } from "src/intershipCategories/intershipCategory.entity"
+import { InternshipCategory } from "src/entity/intershipCategory.entity"
 
 export class WaitlistDto {
     id?: string

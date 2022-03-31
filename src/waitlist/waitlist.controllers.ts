@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post, ParseUUIDPipe } from '@nestjs/common';
 import { WaitlistsService } from '../waitlist/waitlist.service';
 import { WaitlistDto } from '../waitlist/dto/waitlist.dto';
-import { Waitlist } from '../waitlist/waitlist.entity';
+import { Waitlist } from "src/entity/waitlist.entity"
 
 
 @Controller('waitlist')

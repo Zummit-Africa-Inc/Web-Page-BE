@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common"
-import { Waitlist } from "./waitlist.entity"
+import { Waitlist } from "src/entity/waitlist.entity"
 import { InjectRepository } from "@nestjs/typeorm"
 import { Repository } from "typeorm"
 import { WaitlistDto } from "./dto/waitlist.dto"
@@ -12,11 +12,11 @@ export class WaitlistsService {
 
     async findAll(): Promise<Waitlist[]> {
         return await this.waitlistRepository.find({
-            relations: { 
-                category:true
-            }
+            relations: ['category'] 
         })
+        // the relations option displays the internship category each waitlist entry belongs to
     }
+    // gets all email entries of the waitlist
 
 
 
@@ -24,4 +24,5 @@ export class WaitlistsService {
         const newWait = this.waitlistRepository.create(waitlist)
         return await this.waitlistRepository.save(newWait)
     }
+    // adds an email entry to the waitlist
 }

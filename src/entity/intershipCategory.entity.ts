@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import { Waitlist } from "src/waitlist/waitlist.entity";
+import { Waitlist } from "src/entity/waitlist.entity"
 
 @Entity()
 export class InternshipCategory {
@@ -13,4 +13,5 @@ export class InternshipCategory {
 
     @OneToMany(() => Waitlist, (wait) => wait.category)
     waiting: Waitlist[]
+    // this maps the internship category with the array of waitlist under this currrent category
 }
