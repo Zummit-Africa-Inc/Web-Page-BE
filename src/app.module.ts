@@ -24,9 +24,9 @@ import { configConstant } from './common/constants/config.constant';
           .get<string>(configConstant.database.password)
           ?.toString(),
         database: configService.get(configConstant.database.name),
-        // entities: [__dirname + "/**/*.entity{.ts,.js}"],
+        entities: [__dirname + "/**/*.entity{.ts,.js}"],
         autoLoadEntities: true,
-        synchronize: true,
+        synchronize: false,
       }),
       inject: [ConfigService],
     }),

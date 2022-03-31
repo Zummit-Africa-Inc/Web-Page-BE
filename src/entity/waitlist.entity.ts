@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm"
-import { InternshipCategory } from "src/intershipCategories/intershipCategory.entity";
+import { InternshipCategory } from "src/entity/intershipCategory.entity";
 
 
 @Entity()
@@ -15,6 +15,6 @@ export class Waitlist {
 
     @ManyToOne(() => InternshipCategory, (internCat) => internCat.categoryName)
     category: InternshipCategory
-
+    // this maps the waitlist entry with the internship category selected during adding the entry into the waitlist array
 
 }

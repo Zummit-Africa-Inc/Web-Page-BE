@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, ParseUUIDPipe } from '@nestjs/common';
 import { InternshipCategoryService } from '../intershipCategories/internshipCategory.service';
-import { InternshipCategory } from '../intershipCategories/intershipCategory.entity';
+import { InternshipCategory } from '../entity/intershipCategory.entity';
 import { InternshipCategoryDto } from '../intershipCategories/dto/internshipCategory.dto';
 
 @Controller('/intcat')

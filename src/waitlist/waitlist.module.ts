@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { WaitlistsService } from "./waitlist.service";
-import { Waitlist } from "./waitlist.entity";
+import { Waitlist } from "src/entity/waitlist.entity"
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { WaitlistController } from "./waitlist.controllers";
 

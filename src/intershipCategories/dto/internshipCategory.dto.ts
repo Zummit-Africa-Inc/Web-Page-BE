@@ -1,4 +1,4 @@
-import { Waitlist } from "src/waitlist/waitlist.entity"
+import { Waitlist } from "src/entity/waitlist.entity"
 
 export class InternshipCategoryDto {
     id?: string
