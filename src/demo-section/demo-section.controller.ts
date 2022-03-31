@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UpdateResult } from 'typeorm';
-import { DemoSection } from './demo-section.entity';
+import { DemoSection } from '../entities/demo-section.entity';
 import { DemoSectionService } from './demo-section.service';
 import { CreateDemoSectionDto } from './dto/createDemoSectionDto.dto';
 import { UpdateDemoSectionDto } from './dto/updateDemoSectionDto.dto';

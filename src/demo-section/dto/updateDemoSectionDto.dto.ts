@@ -4,9 +4,6 @@ import { CreateDemoSectionDto } from './createDemoSectionDto.dto';
 
 export class UpdateDemoSectionDto extends PartialType(CreateDemoSectionDto) {
   @ApiProperty({ required: false })
-  id?: string;
-
-  @ApiProperty({ required: false })
   fullName?: string;
 
   @ApiProperty()
