@@ -1,14 +1,13 @@
-import { Module } from "@nestjs/common";
-import { InternshipCategoryService } from "./internshipCategory.service";
-import { InternshipCategory } from "../entity/intershipCategory.entity";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { InternshipCategoryContoller } from "./internshipCategories.controllers";
+import { Module } from '@nestjs/common';
+import { InternshipCategoryService } from './internshipCategory.service';
+import { InternshipCategory } from '../entities/intershipCategory.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { InternshipCategoryContoller } from './internshipCategories.controllers';
 
 @Module({
-imports: [TypeOrmModule.forFeature([InternshipCategory])],
-providers: [InternshipCategoryService],
-exports: [InternshipCategoryService],
-controllers: [InternshipCategoryContoller]
+  imports: [TypeOrmModule.forFeature([InternshipCategory])],
+  providers: [InternshipCategoryService],
+  exports: [InternshipCategoryService],
+  controllers: [InternshipCategoryContoller],
 })
-
-export class InternshipCategoryModule{}
+export class InternshipCategoryModule {}
