@@ -21,7 +21,7 @@ export class InternshipCategoryService {
   ): Promise<InternshipCategory> {
     const newCategory =
       this.internshipCategoryRepository.create(internshipCategory);
-    return await this.internshipCategoryRepository.save(internshipCategory);
+    return await this.internshipCategoryRepository.save(newCategory);
   }
   // this add a new category into the internship category list
 
