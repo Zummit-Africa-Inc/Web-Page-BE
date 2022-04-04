@@ -9,6 +9,8 @@ import {
   ParseUUIDPipe,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { RckgAppResponse } from 'src/common/helpers/response/Response';
+import { Ok } from 'src/common/helpers/response/ResponseType';
 import { UpdateResult } from 'typeorm';
 import { DemoSection } from '../entities/demo-section.entity';
 import { DemoSectionService } from './demo-section.service';
@@ -20,33 +22,22 @@ export class DemoSectionController {
   constructor(private readonly demoSectionService: DemoSectionService) {}
 
   @Post()
-  create(@Body() payload: CreateDemoSectionDto): Promise<DemoSection> {
+  async create(@Body() payload: CreateDemoSectionDto): Promise<DemoSection> {
     return this.demoSectionService.create(payload);
   }
   @ApiOkResponse({ type: DemoSection, isArray: true })
   @Get()
-  findAll(): Promise<DemoSection[]> {
-    return this.demoSectionService.findAll();
+  async findAll(): Promise<Ok<DemoSection[]>> {
+    const demos = await this.demoSectionService.findAll();
+    return RckgAppResponse.Ok(demos, "Demos found", "200");
   }
 
   @ApiOkResponse({ type: DemoSection })
   @Get(':id')
-  findOneById(
+  async findOneById(
     @Param('id', new ParseUUIDPipe()) id: string,
-  ): Promise<DemoSection> {
-    return this.demoSectionService.findOneById(id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() payload: UpdateDemoSectionDto,
-  ): Promise<UpdateResult> {
-    return this.demoSectionService.update(id, payload);
-  }
-
-  @Delete(':id')
-  remove(@Param('id', new ParseUUIDPipe()) id: string): Promise<DemoSection> {
-    return this.demoSectionService.remove(id);
+  ): Promise<Ok<DemoSection>> {
+    const demos = await this.demoSectionService.findOneById(id);
+    return RckgAppResponse.Ok(demos, "Demos found", "200");
   }
 }
