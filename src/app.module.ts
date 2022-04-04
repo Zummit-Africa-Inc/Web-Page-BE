@@ -6,17 +6,18 @@ import { AppService } from './app.service';
 import { InternshipCategoryModule } from './intershipCategories/internshipCategory.module';
 import { WaitlistModule } from './waitlist/waitlist.module';
 import { configConstant } from './common/constants/config.constant';
-
+import { DemoSectionModule } from './demo-section/demo-section.module';
 
 @Module({
   imports: [
+    DemoSectionModule,
     WaitlistModule,
     InternshipCategoryModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        type: "postgres",
+        type: 'postgres',
         host: configService.get(configConstant.database.host),
         port: configService.get(configConstant.database.port),
         username: configService.get(configConstant.database.username),
@@ -24,7 +25,7 @@ import { configConstant } from './common/constants/config.constant';
           .get<string>(configConstant.database.password)
           ?.toString(),
         database: configService.get(configConstant.database.name),
-        entities: [__dirname + "/**/*.entity{.ts,.js}"],
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
         autoLoadEntities: true,
         synchronize: false,
       }),

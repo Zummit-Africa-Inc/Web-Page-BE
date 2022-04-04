@@ -9,6 +9,8 @@ import {
 import { InternshipCategoryService } from '../intershipCategories/internshipCategory.service';
 import { InternshipCategory } from '../entities/intershipCategory.entity';
 import { InternshipCategoryDto } from '../intershipCategories/dto/internshipCategory.dto';
+import { Ok } from 'src/common/helpers/response/ResponseType';
+import { RckgAppResponse } from 'src/common/helpers/response/Response';
 
 @Controller('/intcat')
 export class InternshipCategoryContoller {
@@ -17,29 +19,31 @@ export class InternshipCategoryContoller {
   ) {}
 
   @Get()
-  async allCategories(): Promise<InternshipCategory[]> {
+  async allCategories(): Promise<Ok<InternshipCategory[]>> {
     const internshipCategories = await this.internshipcategoryService.findAll();
-    return internshipCategories;
+    return RckgAppResponse.Ok(internshipCategories, "List Of all in internship categories", "200");
   }
-  @Post('')
-  async addIntCatergory(@Body() internshipCategory: InternshipCategoryDto) {
+  @Post()
+  async addIntCatergory(@Body() internshipCategory: InternshipCategoryDto):Promise<Ok<InternshipCategory>> {
     const newCategory = await this.internshipcategoryService.addCategory(
       internshipCategory,
     );
-    return newCategory;
+    return RckgAppResponse.Ok(newCategory, "List Of all in internship categories", "201");
   }
 
   @Get('/:id')
   async showOneCategorybyId(@Param('id', new ParseUUIDPipe()) id: string) {
-    return await this.internshipcategoryService.findOneCategoryById(id);
+    const category = await this.internshipcategoryService.findOneCategoryById(id);
+    return RckgAppResponse.Ok(category, "Category found", "200");
   }
 
   @Get('name')
   async showOneCategoryByName(
     @Body() internshipCategory: InternshipCategoryDto,
   ) {
-    return await this.internshipcategoryService.findOneByCatergoryName(
+    const category = await this.internshipcategoryService.findOneByCatergoryName(
       internshipCategory.categoryName,
     );
+    return RckgAppResponse.Ok(category, "Category found", "200");
   }
 }
