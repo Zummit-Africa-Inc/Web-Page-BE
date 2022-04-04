@@ -1,9 +1,13 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, UpdateResult } from 'typeorm';
+import { RckgAppResponse } from 'src/common/helpers/response';
+import { Repository } from 'typeorm';
 import { DemoSection } from '../entities/demo-section.entity';
 import { CreateDemoSectionDto } from './dto/createDemoSectionDto.dto';
-import { UpdateDemoSectionDto } from './dto/updateDemoSectionDto.dto';
 
 @Injectable()
 export class DemoSectionService {
@@ -13,13 +17,21 @@ export class DemoSectionService {
   ) {}
 
   async create(payload: CreateDemoSectionDto): Promise<DemoSection> {
-    try {
-      //Create user with payload
-      const newDemo = this.demoSectionRepository.create(payload);
-      return await this.demoSectionRepository.save(newDemo);
-    } catch (error) {
-      throw error;
+    //first check of demo exists, throw an error if it does
+    const demo = await this.demoSectionRepository.find({
+      where: { email: payload.email },
+    });
+    if (demo) {
+      throw new BadRequestException(
+        RckgAppResponse.BadRequest(
+          'Existing Values',
+          'A demo has already been requested by this email',
+        ),
+      );
     }
+    //create a new demo
+    const newDemo = this.demoSectionRepository.create(payload);
+    return await this.demoSectionRepository.save(newDemo);
   }
 
   //Find all users in the db
@@ -29,51 +41,12 @@ export class DemoSectionService {
 
   //Find one user by Id
   async findOneById(id: string): Promise<DemoSection> {
-    try {
-      //Find user with the provided id
-      const user = await this.demoSectionRepository.findOneOrFail({
-        where: { id },
-      });
-      //Return User if true
-      if (user) {
-        return user;
-      }
-      //Else throw not found exception
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    } catch (error) {
-      throw error;
+    const demo = await this.demoSectionRepository.findOne({ where: { id } });
+    if (!demo) {
+      throw new NotFoundException(
+        RckgAppResponse.NotFoundRequest('Not Found', 'Demo does not exist'),
+      );
     }
-  }
-
-  //Update a user
-  async update(
-    id: string,
-    payload: UpdateDemoSectionDto,
-  ): Promise<UpdateResult> {
-    try {
-      //Update and return the update result
-      const update = await this.demoSectionRepository.update(id, payload);
-      return update;
-    } catch (error) {
-      //If error,throw exception
-      throw new HttpException('Something went wrong ', HttpStatus.BAD_REQUEST);
-    }
-  }
-
-  async remove(id: string): Promise<DemoSection> {
-    try {
-      //Find user with the provided id
-      const user = await this.demoSectionRepository.findOneOrFail({
-        where: { id },
-      });
-      //Return deleted user if true
-      if (user) {
-        return await this.demoSectionRepository.remove(user);
-      }
-      //Else throw not found exception
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    } catch (error) {
-      throw error;
-    }
+    return demo;
   }
 }

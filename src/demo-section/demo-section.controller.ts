@@ -22,14 +22,18 @@ export class DemoSectionController {
   constructor(private readonly demoSectionService: DemoSectionService) {}
 
   @Post()
-  async create(@Body() payload: CreateDemoSectionDto): Promise<DemoSection> {
-    return this.demoSectionService.create(payload);
+  async create(
+    @Body() payload: CreateDemoSectionDto,
+  ): Promise<Ok<DemoSection>> {
+    const demo = await this.demoSectionService.create(payload);
+    return RckgAppResponse.Ok(demo, 'Demos found', '200');
   }
+  
   @ApiOkResponse({ type: DemoSection, isArray: true })
   @Get()
   async findAll(): Promise<Ok<DemoSection[]>> {
     const demos = await this.demoSectionService.findAll();
-    return RckgAppResponse.Ok(demos, "Demos found", "200");
+    return RckgAppResponse.Ok(demos, 'Demos found', '200');
   }
 
   @ApiOkResponse({ type: DemoSection })
@@ -38,6 +42,6 @@ export class DemoSectionController {
     @Param('id', new ParseUUIDPipe()) id: string,
   ): Promise<Ok<DemoSection>> {
     const demos = await this.demoSectionService.findOneById(id);
-    return RckgAppResponse.Ok(demos, "Demos found", "200");
+    return RckgAppResponse.Ok(demos, 'Demos found', '200');
   }
 }

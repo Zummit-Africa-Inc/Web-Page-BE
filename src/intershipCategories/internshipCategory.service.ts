@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InternshipCategory } from '../entities/intershipCategory.entity';
 import { InternshipCategoryDto } from './dto/internshipCategory.dto';
 import { Repository } from 'typeorm';
@@ -47,7 +51,7 @@ export class InternshipCategoryService {
       // relations options displays the waitlist entry under the fetched category
     });
     if (!category) {
-      throw new BadRequestException(
+      throw new NotFoundException(
         RckgAppResponse.NotFoundRequest(
           'Not Found',
           'This category does not exist',
@@ -72,7 +76,7 @@ export class InternshipCategoryService {
         ),
       );
     }
-    return category
+    return category;
   }
   //this fetches an internship category via the id on the request paramenter
 }
