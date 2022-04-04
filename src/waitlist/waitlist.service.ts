@@ -4,12 +4,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { WaitlistDto } from './dto/waitlist.dto';
 import { RckgAppResponse } from 'src/common/helpers/response';
+import { WaitlistRepository } from 'src/database/repository/waitlist.repository';
 
 @Injectable()
 export class WaitlistsService {
   constructor(
-    @InjectRepository(Waitlist)
-    private readonly waitlistRepository: Repository<Waitlist>,
+    private readonly waitlistRepository: WaitlistRepository,
   ) {}
 
   async findAll(): Promise<Waitlist[]> {

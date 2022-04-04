@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { InternshipCategoryService } from './internshipCategory.service';
-import { InternshipCategory } from '../entities/intershipCategory.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { InternshipCategoryContoller } from './internshipCategories.controllers';
+import { InternshipCategoryRepository } from 'src/database/repository/internship-category.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([InternshipCategory])],
+  imports: [TypeOrmModule.forFeature([InternshipCategoryRepository])],
   providers: [InternshipCategoryService],
   exports: [InternshipCategoryService],
   controllers: [InternshipCategoryContoller],

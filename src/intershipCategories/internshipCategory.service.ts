@@ -8,12 +8,12 @@ import { InternshipCategoryDto } from './dto/internshipCategory.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RckgAppResponse } from 'src/common/helpers/response';
+import { InternshipCategoryRepository } from 'src/database/repository/internship-category.repository';
 
 @Injectable()
 export class InternshipCategoryService {
   constructor(
-    @InjectRepository(InternshipCategory)
-    private readonly internshipCategoryRepository: Repository<InternshipCategory>,
+    private readonly internshipCategoryRepository: InternshipCategoryRepository,
   ) {}
 
   async findAll(): Promise<InternshipCategory[]> {

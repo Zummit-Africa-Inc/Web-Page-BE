@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RckgAppResponse } from 'src/common/helpers/response';
+import { DemoSectionRepository } from 'src/database/repository/demo-section.repository';
 import { Repository } from 'typeorm';
 import { DemoSection } from '../entities/demo-section.entity';
 import { CreateDemoSectionDto } from './dto/createDemoSectionDto.dto';
@@ -12,8 +13,7 @@ import { CreateDemoSectionDto } from './dto/createDemoSectionDto.dto';
 @Injectable()
 export class DemoSectionService {
   constructor(
-    @InjectRepository(DemoSection)
-    private readonly demoSectionRepository: Repository<DemoSection>,
+    private readonly demoSectionRepository: DemoSectionRepository,
   ) {}
 
   async create(payload: CreateDemoSectionDto): Promise<DemoSection> {
