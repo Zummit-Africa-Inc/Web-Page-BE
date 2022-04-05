@@ -3,18 +3,14 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { ZuAppResponse } from 'src/common/helpers/response';
 import { DemoSectionRepository } from 'src/database/repository/demo-section.repository';
-import { Repository } from 'typeorm';
 import { DemoSection } from '../entities/demo-section.entity';
 import { CreateDemoSectionDto } from './dto/createDemoSectionDto.dto';
 
 @Injectable()
 export class DemoSectionService {
-  constructor(
-    private readonly demoSectionRepository: DemoSectionRepository,
-  ) {}
+  constructor(private readonly demoSectionRepository: DemoSectionRepository) {}
 
   async create(payload: CreateDemoSectionDto): Promise<DemoSection> {
     //first check of demo exists, throw an error if it does
