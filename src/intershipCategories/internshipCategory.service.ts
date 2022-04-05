@@ -7,7 +7,7 @@ import { InternshipCategory } from '../entities/intershipCategory.entity';
 import { InternshipCategoryDto } from './dto/internshipCategory.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RckgAppResponse } from 'src/common/helpers/response';
+import { ZuAppResponse } from 'src/common/helpers/response';
 import { InternshipCategoryRepository } from 'src/database/repository/internship-category.repository';
 
 @Injectable()
@@ -30,7 +30,7 @@ export class InternshipCategoryService {
     });
     if (existingCategory) {
       throw new BadRequestException(
-        RckgAppResponse.BadRequest(
+        ZuAppResponse.BadRequest(
           'Duplicate Values',
           'A category with this name already exists',
         ),
@@ -52,7 +52,7 @@ export class InternshipCategoryService {
     });
     if (!category) {
       throw new NotFoundException(
-        RckgAppResponse.NotFoundRequest(
+        ZuAppResponse.NotFoundRequest(
           'Not Found',
           'This category does not exist',
         ),
@@ -70,7 +70,7 @@ export class InternshipCategoryService {
     });
     if (!category) {
       throw new BadRequestException(
-        RckgAppResponse.NotFoundRequest(
+        ZuAppResponse.NotFoundRequest(
           'Not Found',
           'This category does not exist',
         ),

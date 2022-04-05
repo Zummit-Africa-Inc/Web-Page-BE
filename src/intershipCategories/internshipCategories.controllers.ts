@@ -10,7 +10,7 @@ import { InternshipCategoryService } from '../intershipCategories/internshipCate
 import { InternshipCategory } from '../entities/intershipCategory.entity';
 import { InternshipCategoryDto } from '../intershipCategories/dto/internshipCategory.dto';
 import { Ok } from 'src/common/helpers/response/ResponseType';
-import { RckgAppResponse } from 'src/common/helpers/response/Response';
+import { ZuAppResponse } from 'src/common/helpers/response/Response';
 
 @Controller('/intcat')
 export class InternshipCategoryContoller {
@@ -21,20 +21,20 @@ export class InternshipCategoryContoller {
   @Get()
   async allCategories(): Promise<Ok<InternshipCategory[]>> {
     const internshipCategories = await this.internshipcategoryService.findAll();
-    return RckgAppResponse.Ok(internshipCategories, "List Of all in internship categories", "200");
+    return ZuAppResponse.Ok(internshipCategories, "List Of all in internship categories", "200");
   }
   @Post()
   async addIntCatergory(@Body() internshipCategory: InternshipCategoryDto):Promise<Ok<InternshipCategory>> {
     const newCategory = await this.internshipcategoryService.addCategory(
       internshipCategory,
     );
-    return RckgAppResponse.Ok(newCategory, "List Of all in internship categories", "201");
+    return ZuAppResponse.Ok(newCategory, "List Of all in internship categories", "201");
   }
 
   @Get('/:id')
   async showOneCategorybyId(@Param('id', new ParseUUIDPipe()) id: string) {
     const category = await this.internshipcategoryService.findOneCategoryById(id);
-    return RckgAppResponse.Ok(category, "Category found", "200");
+    return ZuAppResponse.Ok(category, "Category found", "200");
   }
 
   @Get('name')
@@ -44,6 +44,6 @@ export class InternshipCategoryContoller {
     const category = await this.internshipcategoryService.findOneByCatergoryName(
       internshipCategory.categoryName,
     );
-    return RckgAppResponse.Ok(category, "Category found", "200");
+    return ZuAppResponse.Ok(category, "Category found", "200");
   }
 }

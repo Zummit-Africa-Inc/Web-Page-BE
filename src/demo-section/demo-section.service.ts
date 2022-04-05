@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RckgAppResponse } from 'src/common/helpers/response';
+import { ZuAppResponse } from 'src/common/helpers/response';
 import { DemoSectionRepository } from 'src/database/repository/demo-section.repository';
 import { Repository } from 'typeorm';
 import { DemoSection } from '../entities/demo-section.entity';
@@ -23,7 +23,7 @@ export class DemoSectionService {
     });
     if (demo) {
       throw new BadRequestException(
-        RckgAppResponse.BadRequest(
+        ZuAppResponse.BadRequest(
           'Existing Values',
           'A demo has already been requested by this email',
         ),
@@ -44,7 +44,7 @@ export class DemoSectionService {
     const demo = await this.demoSectionRepository.findOne({ where: { id } });
     if (!demo) {
       throw new NotFoundException(
-        RckgAppResponse.NotFoundRequest('Not Found', 'Demo does not exist'),
+        ZuAppResponse.NotFoundRequest('Not Found', 'Demo does not exist'),
       );
     }
     return demo;
