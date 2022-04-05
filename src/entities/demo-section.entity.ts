@@ -1,14 +1,11 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsString } from 'class-validator';
+import { SharedEntity } from 'src/common/model/sharedEntity';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class DemoSection {
-  @ApiProperty({ required: false })
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
-  @ApiProperty({ required: false })
+export class DemoSection extends SharedEntity {
+  @ApiPropertyOptional()
   @IsString()
   @Column()
   fullName: string;
@@ -20,11 +17,11 @@ export class DemoSection {
   })
   email: string;
 
-  @ApiProperty({ required: false })
+  @ApiPropertyOptional()
   @Column()
   companyName: string;
 
-  @ApiProperty({ required: false })
+  @ApiPropertyOptional()
   @Column()
   message: string;
 }
