@@ -3,7 +3,7 @@ import { Waitlist } from '../entities/waitlist.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { WaitlistDto } from './dto/waitlist.dto';
-import { RckgAppResponse } from 'src/common/helpers/response';
+import { ZuAppResponse } from 'src/common/helpers/response';
 import { WaitlistRepository } from 'src/database/repository/waitlist.repository';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class WaitlistsService {
     const existingEmail = await this.waitlistRepository.find({ where: { email:waitlist.email}})
     if(existingEmail){
       throw new BadRequestException(
-        RckgAppResponse.BadRequest( " Duplicate Values", "This email has already been added to the waitlist")
+        ZuAppResponse.BadRequest( " Duplicate Values", "This email has already been added to the waitlist")
       )
     }
     const newWait = this.waitlistRepository.create(waitlist);

@@ -9,7 +9,7 @@ import {
   ParseUUIDPipe,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { RckgAppResponse } from 'src/common/helpers/response/Response';
+import { ZuAppResponse } from 'src/common/helpers/response/Response';
 import { Ok } from 'src/common/helpers/response/ResponseType';
 import { UpdateResult } from 'typeorm';
 import { DemoSection } from '../entities/demo-section.entity';
@@ -26,14 +26,14 @@ export class DemoSectionController {
     @Body() payload: CreateDemoSectionDto,
   ): Promise<Ok<DemoSection>> {
     const demo = await this.demoSectionService.create(payload);
-    return RckgAppResponse.Ok(demo, 'Demos found', '200');
+    return ZuAppResponse.Ok(demo, 'Demos found', '200');
   }
   
   @ApiOkResponse({ type: DemoSection, isArray: true })
   @Get()
   async findAll(): Promise<Ok<DemoSection[]>> {
     const demos = await this.demoSectionService.findAll();
-    return RckgAppResponse.Ok(demos, 'Demos found', '200');
+    return ZuAppResponse.Ok(demos, 'Demos found', '200');
   }
 
   @ApiOkResponse({ type: DemoSection })
@@ -42,6 +42,6 @@ export class DemoSectionController {
     @Param('id', new ParseUUIDPipe()) id: string,
   ): Promise<Ok<DemoSection>> {
     const demos = await this.demoSectionService.findOneById(id);
-    return RckgAppResponse.Ok(demos, 'Demos found', '200');
+    return ZuAppResponse.Ok(demos, 'Demos found', '200');
   }
 }
