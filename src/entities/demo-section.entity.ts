@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsString } from 'class-validator';
-import { SharedEntity } from 'src/common/model/sharedEntity';
+import { SharedEntity } from '../common/model/sharedEntity';
 import { Entity, Column } from 'typeorm';
 
 @Entity()

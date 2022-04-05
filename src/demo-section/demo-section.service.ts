@@ -14,7 +14,7 @@ export class DemoSectionService {
 
   async create(payload: CreateDemoSectionDto): Promise<DemoSection> {
     //first check of demo exists, throw an error if it does
-    const demo = await this.demoSectionRepository.find({
+    const demo = await this.demoSectionRepository.findOne({
       where: { email: payload.email },
     });
     if (demo) {
