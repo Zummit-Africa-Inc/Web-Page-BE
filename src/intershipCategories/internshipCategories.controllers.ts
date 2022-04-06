@@ -47,7 +47,6 @@ export class InternshipCategoryContoller {
   async showOneCategoryByName(
     @Body() internshipCategory: InternshipCategoryDto ,
   ) {
-    console.log(internshipCategory)
     const category = await this.internshipcategoryService.findOneByCatergoryName(
       internshipCategory.categoryName,
     );
