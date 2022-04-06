@@ -11,13 +11,18 @@ import { InternshipCategory } from '../entities/intershipCategory.entity';
 import { InternshipCategoryDto } from '../intershipCategories/dto/internshipCategory.dto';
 import { Ok } from 'src/common/helpers/response/ResponseType';
 import { ZuAppResponse } from 'src/common/helpers/response/Response';
+import { ApiTags, ApiOkResponse } from '@nestjs/swagger';
 
-@Controller('/intcat')
+
+@ApiTags('Internship-Category')
+@Controller('/internship-category')
 export class InternshipCategoryContoller {
   constructor(
     private readonly internshipcategoryService: InternshipCategoryService,
   ) {}
 
+
+  @ApiOkResponse({ type: InternshipCategory, isArray: true })
   @Get()
   async allCategories(): Promise<Ok<InternshipCategory[]>> {
     const internshipCategories = await this.internshipcategoryService.findAll();
@@ -31,16 +36,18 @@ export class InternshipCategoryContoller {
     return ZuAppResponse.Ok(newCategory, "List Of all in internship categories", "201");
   }
 
+  @ApiOkResponse({ type: InternshipCategory })
   @Get('/:id')
   async showOneCategorybyId(@Param('id', new ParseUUIDPipe()) id: string) {
     const category = await this.internshipcategoryService.findOneCategoryById(id);
     return ZuAppResponse.Ok(category, "Category found", "200");
   }
 
-  @Get('name')
+  @Post('/category-name')
   async showOneCategoryByName(
-    @Body() internshipCategory: InternshipCategoryDto,
+    @Body() internshipCategory: InternshipCategoryDto ,
   ) {
+    console.log(internshipCategory)
     const category = await this.internshipcategoryService.findOneByCatergoryName(
       internshipCategory.categoryName,
     );
