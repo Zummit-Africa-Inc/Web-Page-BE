@@ -9,34 +9,34 @@ import {
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ZuAppResponse } from 'src/common/helpers/response/Response';
 import { Ok } from 'src/common/helpers/response/ResponseType';
-import { DemoSection } from '../entities/demo-section.entity';
+import { Demo_Requests } from '../entities/demo-section.entity';
 import { DemoSectionService } from './demo-section.service';
 import { CreateDemoSectionDto } from './dto/createDemoSectionDto.dto';
-@ApiTags('Demo-Section')
-@Controller('/demo-section')
+@ApiTags('Demo_Requests')
+@Controller('/demo_requests')
 export class DemoSectionController {
   constructor(private readonly demoSectionService: DemoSectionService) {}
 
   @Post()
   async create(
     @Body() payload: CreateDemoSectionDto,
-  ): Promise<Ok<DemoSection>> {
+  ): Promise<Ok<Demo_Requests>> {
     const demo = await this.demoSectionService.create(payload);
     return ZuAppResponse.Ok(demo, 'Demo Created', '200');
   }
 
-  @ApiOkResponse({ type: DemoSection, isArray: true })
+  @ApiOkResponse({ type: Demo_Requests, isArray: true })
   @Get()
-  async findAll(): Promise<Ok<DemoSection[]>> {
+  async findAll(): Promise<Ok<Demo_Requests[]>> {
     const demos = await this.demoSectionService.findAll();
     return ZuAppResponse.Ok(demos, 'Demos found', '200');
   }
 
-  @ApiOkResponse({ type: DemoSection })
+  @ApiOkResponse({ type: Demo_Requests })
   @Get(':id')
   async findOneById(
     @Param('id', new ParseUUIDPipe()) id: string,
-  ): Promise<Ok<DemoSection>> {
+  ): Promise<Ok<Demo_Requests>> {
     const demo = await this.demoSectionService.findOneById(id);
     return ZuAppResponse.Ok(demo, 'Demo found', '200');
   }

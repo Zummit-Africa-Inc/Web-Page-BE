@@ -4,7 +4,7 @@ import { SharedEntity } from '../common/model/sharedEntity';
 import { Entity, Column } from 'typeorm';
 
 @Entity()
-export class DemoSection extends SharedEntity {
+export class Demo_Requests extends SharedEntity {
   //Optional field for Full Names
   @ApiPropertyOptional()
   @IsString()
