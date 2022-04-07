@@ -1,7 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Waitlist } from '../entities/waitlist.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { WaitlistDto } from './dto/waitlist.dto';
 import { ZuAppResponse } from 'src/common/helpers/response';
 import { WaitlistRepository } from 'src/database/repository/waitlist.repository';
@@ -22,7 +20,7 @@ export class WaitlistsService {
 
   async addToWaitlist(waitlist: WaitlistDto): Promise<Waitlist> {
     //check if email already exists
-    const existingEmail = await this.waitlistRepository.find({ where: { email:waitlist.email}})
+    const existingEmail = await this.waitlistRepository.findOne({ where: { email:waitlist.email}})
     if(existingEmail){
       throw new BadRequestException(
         ZuAppResponse.BadRequest( " Duplicate Values", "This email has already been added to the waitlist")

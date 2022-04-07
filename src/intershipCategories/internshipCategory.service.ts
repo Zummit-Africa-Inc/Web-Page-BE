@@ -5,8 +5,6 @@ import {
 } from '@nestjs/common';
 import { InternshipCategory } from '../entities/intershipCategory.entity';
 import { InternshipCategoryDto } from './dto/internshipCategory.dto';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
 import { ZuAppResponse } from 'src/common/helpers/response';
 import { InternshipCategoryRepository } from 'src/database/repository/internship-category.repository';
 
@@ -25,7 +23,7 @@ export class InternshipCategoryService {
     internshipCategory: InternshipCategoryDto,
   ): Promise<InternshipCategory> {
     //check if the category already exists
-    const existingCategory = await this.internshipCategoryRepository.find({
+    const existingCategory = await this.internshipCategoryRepository.findOne({
       where: { categoryName: internshipCategory.categoryName },
     });
     if (existingCategory) {
@@ -42,11 +40,11 @@ export class InternshipCategoryService {
   }
   // this add a new category into the internship category list
 
-  async findOneByCatergoryName(
+   async findOneByCatergoryName(
     categoryName: string,
   ): Promise<InternshipCategory> {
     const category = await this.internshipCategoryRepository.findOne({
-      where: { categoryName },
+      where: { categoryName : categoryName },
       relations: ['waiting'],
       // relations options displays the waitlist entry under the fetched category
     });
@@ -60,6 +58,8 @@ export class InternshipCategoryService {
     }
     return category;
   }
+
+
   // this fetches an internship category
 
   async findOneCategoryById(id: string): Promise<InternshipCategory> {
