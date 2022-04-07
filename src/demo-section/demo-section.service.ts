@@ -3,22 +3,18 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { ZuAppResponse } from 'src/common/helpers/response';
 import { DemoSectionRepository } from 'src/database/repository/demo-section.repository';
-import { Repository } from 'typeorm';
-import { DemoSection } from '../entities/demo-section.entity';
+import { Demo_Requests } from '../entities/demo-section.entity';
 import { CreateDemoSectionDto } from './dto/createDemoSectionDto.dto';
 
 @Injectable()
 export class DemoSectionService {
-  constructor(
-    private readonly demoSectionRepository: DemoSectionRepository,
-  ) {}
+  constructor(private readonly demoSectionRepository: DemoSectionRepository) {}
 
-  async create(payload: CreateDemoSectionDto): Promise<DemoSection> {
-    //first check of demo exists, throw an error if it does
-    const demo = await this.demoSectionRepository.find({
+  async create(payload: CreateDemoSectionDto): Promise<Demo_Requests> {
+    //First check if demo exists, throw an error if it does
+    const demo = await this.demoSectionRepository.findOne({
       where: { email: payload.email },
     });
     if (demo) {
@@ -35,12 +31,12 @@ export class DemoSectionService {
   }
 
   //Find all users in the db
-  async findAll(): Promise<DemoSection[]> {
+  async findAll(): Promise<Demo_Requests[]> {
     return await this.demoSectionRepository.find();
   }
 
   //Find one user by Id
-  async findOneById(id: string): Promise<DemoSection> {
+  async findOneById(id: string): Promise<Demo_Requests> {
     const demo = await this.demoSectionRepository.findOne({ where: { id } });
     if (!demo) {
       throw new NotFoundException(
