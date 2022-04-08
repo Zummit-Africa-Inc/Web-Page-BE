@@ -9,7 +9,7 @@ import { WaitlistDto } from '../waitlist/dto/waitlist.dto';
 import { Waitlist } from '../entities/waitlist.entity';
 import { ZuAppResponse } from 'src/common/helpers/response/Response';
 import { Ok } from 'src/common/helpers/response/ResponseType';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 
 @ApiTags('Waitlist')
@@ -18,6 +18,7 @@ export class WaitlistController {
   constructor(private readonly waitlistService: WaitlistsService) {}
 
   @ApiOkResponse({type: Waitlist, isArray: true})
+  @ApiOperation({ summary: 'Get all Waislists ' })
   @Get()
   async showWaitlist(): Promise<Ok<Waitlist[]>> {
     const waitingList = await this.waitlistService.findAll();
@@ -25,6 +26,7 @@ export class WaitlistController {
   }
 
   @Post()
+  @ApiOperation({ summary: 'Add an email to waitlist' })
   async joinWaitlist(@Body() waitlist: WaitlistDto): Promise<Ok<Waitlist>> {
     const waiter = await this.waitlistService.addToWaitlist(waitlist);
     return ZuAppResponse.Ok(waiter, "Added to waitlist", "201");
