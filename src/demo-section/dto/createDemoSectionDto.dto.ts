@@ -1,15 +1,17 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsEmail } from 'class-validator';
 
 export class CreateDemoSectionDto {
-  @ApiProperty({ required: false })
+  @ApiPropertyOptional()
   fullName?: string;
 
   @ApiProperty()
+  @IsEmail()
   email: string;
 
-  @ApiProperty({ required: false })
+  @ApiPropertyOptional()
   companyName?: string;
 
-  @ApiProperty({ required: false })
+  @ApiPropertyOptional()
   message?: string;
 }

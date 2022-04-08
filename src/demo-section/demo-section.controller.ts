@@ -6,7 +6,7 @@ import {
   Param,
   ParseUUIDPipe,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ZuAppResponse } from 'src/common/helpers/response/Response';
 import { Ok } from 'src/common/helpers/response/ResponseType';
 import { Demo_Requests } from '../entities/demo-section.entity';
@@ -17,6 +17,7 @@ import { CreateDemoSectionDto } from './dto/createDemoSectionDto.dto';
 export class DemoSectionController {
   constructor(private readonly demoSectionService: DemoSectionService) {}
 
+  @ApiOperation({ summary: 'request a demo' })
   @Post()
   async create(
     @Body() payload: CreateDemoSectionDto,
@@ -26,6 +27,7 @@ export class DemoSectionController {
   }
 
   @ApiOkResponse({ type: Demo_Requests, isArray: true })
+  @ApiOperation({ summary: 'get all requested demos' })
   @Get()
   async findAll(): Promise<Ok<Demo_Requests[]>> {
     const demos = await this.demoSectionService.findAll();
@@ -33,6 +35,7 @@ export class DemoSectionController {
   }
 
   @ApiOkResponse({ type: Demo_Requests })
+  @ApiOperation({ summary: 'get a demo by id' })
   @Get(':id')
   async findOneById(
     @Param('id', new ParseUUIDPipe()) id: string,
