@@ -7,6 +7,7 @@ import { InternshipCategoryModule } from './intershipCategories/internshipCatego
 import { WaitlistModule } from './waitlist/waitlist.module';
 import { configConstant } from './common/constants/config.constant';
 import { DemoSectionModule } from './demo-section/demo-section.module';
+import { RegisterModule } from './register/register.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { DemoSectionModule } from './demo-section/demo-section.module';
       }),
       inject: [ConfigService],
     }),
+    RegisterModule,
   ],
   controllers: [AppController],
   providers: [AppService],
