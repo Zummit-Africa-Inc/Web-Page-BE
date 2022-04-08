@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Post,
+  Delete,
 } from '@nestjs/common';
 import { WaitlistsService } from '../waitlist/waitlist.service';
 import { WaitlistDto } from '../waitlist/dto/waitlist.dto';
@@ -31,4 +32,5 @@ export class WaitlistController {
     const waiter = await this.waitlistService.addToWaitlist(waitlist);
     return ZuAppResponse.Ok(waiter, "Added to waitlist", "201");
   }
+ 
 }

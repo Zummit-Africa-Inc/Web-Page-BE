@@ -1,7 +1,7 @@
-import { Waitlist } from '../../entities/waitlist.entity';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class InternshipCategoryDto {
-  // id?: string;
+  @ApiProperty()
   categoryName: string;
-  // waiting?: Waitlist[];
+  
 }
