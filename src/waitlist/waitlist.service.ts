@@ -31,7 +31,7 @@ export class WaitlistsService {
 
     //check if the category exist
     const existingCategory = await this.internshipCategoryRepository.findOne({ where : { categoryName: category}});
-    if(category){
+    if(!existingCategory){
       throw new BadRequestException(
         ZuAppResponse.BadRequest( "Invalid Category", "This category does not exist")
       )
@@ -40,4 +40,6 @@ export class WaitlistsService {
     return await this.waitlistRepository.save(newWait);
   }
   // adds an email entry to the waitlist
+
+
 }

@@ -19,13 +19,9 @@ export class InternshipCategoryService {
   }
   // this gets all internship categories available for selection
 
-  async addCategory(
-    internshipCategory: InternshipCategoryDto,
-  ): Promise<InternshipCategory> {
+  async addCategory({categoryName}: InternshipCategoryDto): Promise<InternshipCategory> {
     //check if the category already exists
-    const existingCategory = await this.internshipCategoryRepository.findOne({
-      where: { categoryName: internshipCategory.categoryName },
-    });
+    const existingCategory = await this.internshipCategoryRepository.findOne({where: { categoryName}});
     if (existingCategory) {
       throw new BadRequestException(
         ZuAppResponse.BadRequest(
@@ -35,7 +31,7 @@ export class InternshipCategoryService {
       );
     }
     const newCategory =
-      this.internshipCategoryRepository.create(internshipCategory);
+      this.internshipCategoryRepository.create({categoryName});
     return await this.internshipCategoryRepository.save(newCategory);
   }
   // this add a new category into the internship category list
@@ -79,4 +75,9 @@ export class InternshipCategoryService {
     return category;
   }
   //this fetches an internship category via the id on the request paramenter
+
+  async removeAll(): Promise<void>{
+    return await this.internshipCategoryRepository.clear()
+    
+  }
 }
