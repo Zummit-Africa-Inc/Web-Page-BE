@@ -8,6 +8,6 @@ export class WaitlistDto {
   email: string;
   
   @ApiPropertyOptional()
-  @Transform(({ value }) => value.toUpperCase())
+  @Transform(({ value }) => value.toLowerCase())
   category?: string;
 }
