@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Waitlist } from '../entities/waitlist.entity';
 import { WaitlistDto } from './dto/waitlist.dto';
-import { ZuAppResponse } from 'src/common/helpers/response';
-import { WaitlistRepository } from 'src/database/repository/waitlist.repository';
-import { InternshipCategoryRepository } from 'src/database/repository/internship-category.repository';
+import { ZuAppResponse } from '../common/helpers/response';
+import { WaitlistRepository } from '../database/repository/waitlist.repository';
+import { InternshipCategoryRepository } from '../database/repository/internship-category.repository';
 
 @Injectable()
 export class WaitlistsService {
