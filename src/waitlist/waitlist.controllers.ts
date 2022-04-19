@@ -8,8 +8,8 @@ import {
 import { WaitlistsService } from '../waitlist/waitlist.service';
 import { WaitlistDto } from '../waitlist/dto/waitlist.dto';
 import { Waitlist } from '../entities/waitlist.entity';
-import { ZuAppResponse } from 'src/common/helpers/response/Response';
-import { Ok } from 'src/common/helpers/response/ResponseType';
+import { ZuAppResponse } from '../common/helpers/response/Response';
+import { Ok } from '../common/helpers/response/ResponseType';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 

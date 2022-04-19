@@ -5,8 +5,8 @@ import {
 } from '@nestjs/common';
 import { InternshipCategory } from '../entities/intershipCategory.entity';
 import { InternshipCategoryDto } from './dto/internshipCategory.dto';
-import { ZuAppResponse } from 'src/common/helpers/response';
-import { InternshipCategoryRepository } from 'src/database/repository/internship-category.repository';
+import { ZuAppResponse } from '../common/helpers/response';
+import { InternshipCategoryRepository } from '../database/repository/internship-category.repository';
 
 @Injectable()
 export class InternshipCategoryService {

@@ -10,8 +10,8 @@ import {
 import { InternshipCategoryService } from '../intershipCategories/internshipCategory.service';
 import { InternshipCategory } from '../entities/intershipCategory.entity';
 import { InternshipCategoryDto } from '../intershipCategories/dto/internshipCategory.dto';
-import { Ok } from 'src/common/helpers/response/ResponseType';
-import { ZuAppResponse } from 'src/common/helpers/response/Response';
+import { Ok } from '../common/helpers/response/ResponseType';
+import { ZuAppResponse } from '../common/helpers/response/Response';
 import { ApiTags, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 
 
