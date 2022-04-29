@@ -9,13 +9,15 @@ export class MailService {
   /* Sending a mail to the user who requested for a demo. */
   async sendUserConfirmation(user: Demo_Requests) {
     await this.mailerService.sendMail({
-      to: user.email,
+      to: 'contact@zummitafrica.com',
       from: 'no_reply@zummitafrica.com',
-      subject: 'Demo Request Successful',
+      subject: 'New Demo Request',
       template: 'confirmation',
       context: {
         name: user.fullName,
         email: user.email,
+        company: user.companyName,
+        message: user.message,
       },
     });
   }
