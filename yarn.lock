@@ -320,6 +320,13 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.16.7"
 
+"@babel/runtime@^7.6.3":
+  "integrity" "sha512-lSiBBvodq29uShpWGNbgFdKYNiFDo5/HIYsaCEY9ff4sb10x9jizo2+pRrSyF4jKZCXqgzuqBOQKbUm90gQwJg=="
+  "resolved" "https://registry.npmjs.org/@babel/runtime/-/runtime-7.17.9.tgz"
+  "version" "7.17.9"
+  dependencies:
+    "regenerator-runtime" "^0.13.4"
+
 "@babel/template@^7.16.7", "@babel/template@^7.3.3":
   version "7.16.7"
   resolved "https://registry.npmjs.org/@babel/template/-/template-7.16.7.tgz"
@@ -584,6 +591,11 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
+"@jonkemp/package-utils@^1.0.8":
+  "integrity" "sha512-bIcKnH5YmtTYr7S6J3J86dn/rFiklwRpOqbTOQ9C0WMmR9FKHVb3bxs2UYfqEmNb93O4nbA97sb6rtz33i9SyA=="
+  "resolved" "https://registry.npmjs.org/@jonkemp/package-utils/-/package-utils-1.0.8.tgz"
+  "version" "1.0.8"
+
 "@jridgewell/resolve-uri@^3.0.3":
   version "3.0.5"
   resolved "https://registry.npmjs.org/@jridgewell/resolve-uri/-/resolve-uri-3.0.5.tgz"
@@ -601,6 +613,21 @@
   dependencies:
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
+
+"@nestjs-modules/mailer@^1.5.1":
+  "integrity" "sha512-Iyt3wEuJW4rNnEU71zKNqVap9qj+q6s21JXlSmhV2j3sq5CQcCRELAnw+itg650UYF4KiYH5O4ZR+TvKgYZyVw=="
+  "resolved" "https://registry.npmjs.org/@nestjs-modules/mailer/-/mailer-1.5.1.tgz"
+  "version" "1.5.1"
+  dependencies:
+    "glob" "7.1.6"
+    "inline-css" "2.6.3"
+    "preview-email" "2.0.2"
+  optionalDependencies:
+    "@types/ejs" "^3.0.3"
+    "@types/pug" "2.0.4"
+    "ejs" "^3.1.2"
+    "handlebars" "^4.7.6"
+    "pug" "^2.0.4"
 
 "@nestjs/cli@^8.2.4":
   version "8.2.4"
@@ -821,6 +848,18 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/babel-types@*", "@types/babel-types@^7.0.0":
+  "integrity" "sha512-pkPtJUUY+Vwv6B1inAz55rQvivClHJxc9aVEPPmaq2cbyeMLCiDpbKpcKyX4LAwpNGi+SHBv0tHv6+0gXv0P2A=="
+  "resolved" "https://registry.npmjs.org/@types/babel-types/-/babel-types-7.0.11.tgz"
+  "version" "7.0.11"
+
+"@types/babylon@^6.16.2":
+  "integrity" "sha512-G4yqdVlhr6YhzLXFKy5F7HtRBU8Y23+iWy7UKthMq/OSQnL1hbsoeXESQ2LY8zEDlknipDG3nRGhUC9tkwvy/w=="
+  "resolved" "https://registry.npmjs.org/@types/babylon/-/babylon-6.16.6.tgz"
+  "version" "6.16.6"
+  dependencies:
+    "@types/babel-types" "*"
+
 "@types/body-parser@*":
   version "1.19.2"
   resolved "https://registry.npmjs.org/@types/body-parser/-/body-parser-1.19.2.tgz"
@@ -840,6 +879,11 @@
   version "2.1.2"
   resolved "https://registry.npmjs.org/@types/cookiejar/-/cookiejar-2.1.2.tgz"
   integrity sha512-t73xJJrvdTjXrn4jLS9VSGRbz0nUY3cl2DMGDU48lKl+HR9dbbjW2A9r3g40VA++mQpy6uuHg33gy7du2BKpog==
+
+"@types/ejs@^3.0.3":
+  "integrity" "sha512-DCg+Ka+uDQ31lJ/UtEXVlaeV3d6t81gifaVWKJy4MYVVgvJttyX/viREy+If7fz+tK/gVxTGMtyrFPnm4gjrVA=="
+  "resolved" "https://registry.npmjs.org/@types/ejs/-/ejs-3.1.0.tgz"
+  "version" "3.1.0"
 
 "@types/eslint-scope@^3.7.3":
   version "3.7.3"
@@ -935,6 +979,13 @@
   resolved "https://registry.npmjs.org/@types/node/-/node-16.11.26.tgz"
   integrity sha512-GZ7bu5A6+4DtG7q9GsoHXy3ALcgeIHP4NnL0Vv2wu0uUB/yQex26v0tf6/na1mm0+bS9Uw+0DFex7aaKr2qawQ==
 
+"@types/nodemailer@^6.4.4":
+  "integrity" "sha512-Ksw4t7iliXeYGvIQcSIgWQ5BLuC/mljIEbjf615svhZL10PE9t+ei8O9gDaD3FPCasUJn9KTLwz2JFJyiiyuqw=="
+  "resolved" "https://registry.npmjs.org/@types/nodemailer/-/nodemailer-6.4.4.tgz"
+  "version" "6.4.4"
+  dependencies:
+    "@types/node" "*"
+
 "@types/parse-json@^4.0.0":
   version "4.0.0"
   resolved "https://registry.npmjs.org/@types/parse-json/-/parse-json-4.0.0.tgz"
@@ -944,6 +995,11 @@
   version "2.4.4"
   resolved "https://registry.npmjs.org/@types/prettier/-/prettier-2.4.4.tgz"
   integrity sha512-ReVR2rLTV1kvtlWFyuot+d1pkpG2Fw/XKE3PDAdj57rbM97ttSp9JZ2UsP+2EHTylra9cUf6JA7tGwW1INzUrA==
+
+"@types/pug@2.0.4":
+  "integrity" "sha1-h3L80EGOPNLMFxVV1zAHQVBR9LI="
+  "resolved" "https://registry.npmjs.org/@types/pug/-/pug-2.0.4.tgz"
+  "version" "2.0.4"
 
 "@types/qs@*":
   version "6.9.7"
