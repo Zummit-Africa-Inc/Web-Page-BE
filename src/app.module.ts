@@ -8,6 +8,7 @@ import { WaitlistModule } from './waitlist/waitlist.module';
 import { configConstant } from './common/constants/config.constant';
 import { DemoSectionModule } from './demo-section/demo-section.module';
 import { MailModule } from './mail/mail.module';
+import { CoursesModule } from './courses/courses.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { MailModule } from './mail/mail.module';
       inject: [ConfigService],
     }),
     MailModule,
+    CoursesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
