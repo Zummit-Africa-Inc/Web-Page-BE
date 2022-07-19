@@ -16,7 +16,7 @@ export class Course extends SharedEntity {
   @Column({ nullable: true, default: 0 })
   rating: number;
 
-  @Column()
+  @Column({ nullable: true })
   tutor: string;
 
   @Column({
@@ -35,6 +35,6 @@ export class Course extends SharedEntity {
   @Column('text', { array: true, nullable: true, default: [] })
   students: string[];
 
-  @Column()
+  @Column({ nullable: true })
   language: string;
 }
