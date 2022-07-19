@@ -1,4 +1,11 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Ok } from 'src/common/helpers/response/ResponseType';
 import { ZuAppResponse } from 'src/common/helpers/response';
@@ -16,5 +23,21 @@ export class CoursesController {
   async create(@Body() createCourseDto: CreateCourseDto): Promise<Ok<Course>> {
     const course = await this.coursesService.create(createCourseDto);
     return ZuAppResponse.Ok(course, 'Course Created', '201');
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Get a single course' })
+  async findOne(
+    @Param('id', new ParseUUIDPipe()) id: string,
+  ): Promise<Ok<Course>> {
+    const course = await this.coursesService.findOne(id);
+    return ZuAppResponse.Ok(course, 'Ok', '200');
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Get all courses' })
+  async findAll(): Promise<Ok<Course[]>> {
+    const courses = await this.coursesService.findAll();
+    return ZuAppResponse.Ok(courses, 'Ok', '200');
   }
 }
