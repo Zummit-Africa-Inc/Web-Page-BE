@@ -38,4 +38,44 @@ export class CourseService {
       );
     }
   }
+
+  /**
+   * It finds a course by its id and returns it
+   * @param {string} id - The id of the course you want to find.
+   * @returns The course that was found.
+   */
+  async findOne(id: string): Promise<Course> {
+    try {
+      const course = await this.coursesRepository.findOne(id);
+      /* Checking if the course already exists. If it doesn't, it throws an error. */
+      if (!course) {
+        throw new BadRequestException(
+          ZuAppResponse.NotFoundRequest(
+            'Not Found',
+            'This course does not exist',
+          ),
+        );
+      } else {
+        return course;
+      }
+    } catch (error) {
+      throw new BadRequestException(
+        ZuAppResponse.BadRequest('Internal Server error', error.message, '500'),
+      );
+    }
+  }
+
+  /**
+   * It returns a list of all courses in the database
+   * @returns An array of courses
+   */
+  async findAll(): Promise<Course[]> {
+    try {
+      return await this.coursesRepository.find();
+    } catch (error) {
+      throw new BadRequestException(
+        ZuAppResponse.BadRequest('Internal Server error', error.message, '500'),
+      );
+    }
+  }
 }
