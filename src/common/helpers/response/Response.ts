@@ -13,7 +13,7 @@ export class ZuAppResponse {
     } as Ok<Type>;
   }
 
-  static OkFailue<Type>(
+  static OkFailure<Type>(
     data: Type,
     message = '',
     status?: string | number,
