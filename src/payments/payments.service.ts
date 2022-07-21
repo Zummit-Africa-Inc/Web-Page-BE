@@ -43,19 +43,21 @@ export class PaymentService {
         });
 
       /* This is a check for internet connectivity issues. */
-      if (!result.response && result.status !== 200)
+      if (!result) {
         throw new BadRequestException(
           ZuAppResponse.OkFailure('Failed', 'Bad Internet Connection'),
         );
+      }
 
       /* This is a check for verification errors. */
-      if (result.response && !result.response.data.status)
+      if (result && result.data.status !== 200) {
         throw new BadRequestException(
           ZuAppResponse.OkFailure(
             'Failed',
-            'Error verifying payment , Unknown Transaction Reference Id',
+            'Error verifying payment , Unknown Transaction Status',
           ),
         );
+      }
 
       const { data, ...response } = result.data;
       return { response };
