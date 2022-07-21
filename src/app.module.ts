@@ -9,6 +9,7 @@ import { configConstant } from './common/constants/config.constant';
 import { DemoSectionModule } from './demo-section/demo-section.module';
 import { MailModule } from './mail/mail.module';
 import { CoursesModule } from './courses/courses.module';
+import { PaymentsModule } from './payments/payments.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { CoursesModule } from './courses/courses.module';
     }),
     MailModule,
     CoursesModule,
+    PaymentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
