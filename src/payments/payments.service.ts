@@ -42,7 +42,6 @@ export class PaymentService {
       )
         .then((success) => {
           result = success;
-          // console.log(result);
         })
         .catch((error) => {
           result = error;
