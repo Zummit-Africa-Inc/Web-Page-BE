@@ -5,6 +5,7 @@ import { ZuAppResponse } from 'src/common/helpers/response';
 import { Verification } from 'src/common/Interfaces/payment.interface';
 import { CoursesRepository } from 'src/database/repository/courses.repository';
 import { Connection } from 'typeorm';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class PaymentService {
@@ -12,6 +13,7 @@ export class PaymentService {
   constructor(
     private readonly connection: Connection,
     private readonly httpService: HttpService,
+    private readonly mailService: MailService,
   ) {
     this.coursesRepository =
       this.connection.getCustomRepository(CoursesRepository);
@@ -50,7 +52,7 @@ export class PaymentService {
       }
 
       /* This is a check for verification errors. */
-      if (result && result.data.status !== 200) {
+      if (result && result.status !== 200) {
         throw new BadRequestException(
           ZuAppResponse.OkFailure(
             'Failed',
@@ -58,7 +60,17 @@ export class PaymentService {
           ),
         );
       }
+      const email = result.data.data.customer.email;
+      const firstName = result.data.data.metadata.first_name;
+      const lastName = result.data.data.metadata.last_name;
+      const amount = result.data.data.amount;
 
+      await this.mailService.sendPaymentConfirmation({
+        email,
+        firstName,
+        lastName,
+        amount: amount / 100,
+      });
       const { data, ...response } = result.data;
       return { response };
     } catch (error) {
