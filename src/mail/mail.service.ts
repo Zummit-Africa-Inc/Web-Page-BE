@@ -29,8 +29,7 @@ export class MailService {
    * It sends an email to the user with the details of the course they just purchased
    * @param {Details} details - Details
    */
-  async sendPaymentConfirmation(details: Details) {
-    console.log(details);
+  async sendPaymentConfirmation(details: Details) 
 
     await this.mailerService.sendMail({
       to: details.email,
