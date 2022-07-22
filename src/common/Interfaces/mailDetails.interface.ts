@@ -3,4 +3,7 @@ export interface Details {
   firstName?: string;
   lastName?: string;
   amount: number;
+  tutor: string;
+  title: string;
+  description: string;
 }

@@ -30,6 +30,8 @@ export class MailService {
    * @param {Details} details - Details
    */
   async sendPaymentConfirmation(details: Details) {
+    console.log(details);
+
     await this.mailerService.sendMail({
       to: details.email,
       from: 'no_reply@zummitafrica.com',

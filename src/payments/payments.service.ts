@@ -69,12 +69,15 @@ export class PaymentService {
       const firstName = result.data.data.metadata.first_name;
       const lastName = result.data.data.metadata.last_name;
       const amount = result.data.data.amount;
+      const courseId = result.data.data.metadata.course_id;
 
+      const courseDetails = await this.getDetails(courseId, true);
       await this.mailService.sendPaymentConfirmation({
         email,
         firstName,
         lastName,
         amount: amount / 100,
+        ...courseDetails,
       });
       await this.savePayment(result.data.data);
       const { data, ...response } = result.data;
@@ -91,13 +94,21 @@ export class PaymentService {
    * @param {string} id - string - The id of the course
    * @returns The price of the course
    */
-  async getPrice(id: string): Promise<number> {
+
+  async getDetails(id: string, details?: boolean): Promise<any> {
     try {
       const course = await this.coursesRepository.findOne(id);
       if (!course) {
         throw new BadRequestException(
           ZuAppResponse.NotFoundRequest('Not Found', 'Course does not exist'),
         );
+      }
+      if (details) {
+        return {
+          title: course.title,
+          description: course.description,
+          tutor: course.tutor,
+        };
       }
       return course.price;
     } catch (error) {
