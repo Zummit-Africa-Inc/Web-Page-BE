@@ -6,10 +6,12 @@ import { Verification } from 'src/common/Interfaces/payment.interface';
 import { CoursesRepository } from 'src/database/repository/courses.repository';
 import { Connection } from 'typeorm';
 import { MailService } from 'src/mail/mail.service';
+import { PaymentDetailsRepository } from 'src/database/repository/payments.repository';
 
 @Injectable()
 export class PaymentService {
   coursesRepository: CoursesRepository;
+  paymentRepo: PaymentDetailsRepository;
   constructor(
     private readonly connection: Connection,
     private readonly httpService: HttpService,
@@ -17,6 +19,9 @@ export class PaymentService {
   ) {
     this.coursesRepository =
       this.connection.getCustomRepository(CoursesRepository);
+    this.paymentRepo = this.connection.getCustomRepository(
+      PaymentDetailsRepository,
+    );
   }
 
   /**
@@ -71,6 +76,7 @@ export class PaymentService {
         lastName,
         amount: amount / 100,
       });
+      await this.savePayment(result.data.data);
       const { data, ...response } = result.data;
       return { response };
     } catch (error) {
@@ -99,5 +105,37 @@ export class PaymentService {
         ZuAppResponse.BadRequest('Internal Server error', error.message, '500'),
       );
     }
+  }
+
+  /**
+   * It saves the payment details to the database
+   * @param {any} data - any
+   */
+  async savePayment(data: any): Promise<void> {
+    const info = {
+      paystackId: data.id,
+      status: data.status,
+      reference: data.reference,
+      amount: data.amount / 100,
+      gateway_response: data.gateway_response,
+      channel: data.channel,
+      currency: data.currency,
+      ip_address: data.ip_address,
+      fees: data.fees,
+      paidAt: data.paidAt,
+      metadata: data.metadata.referrer,
+    };
+
+    const customer = {
+      id: data.customer.id,
+      first_name: data.customer.first_name,
+      last_name: data.customer.last_name,
+      email: data.customer.email,
+      customer_code: data.customer.customer_code,
+      phone: data.customer.phone,
+    };
+
+    const paymentDetails = this.paymentRepo.create({ ...info, customer });
+    await this.paymentRepo.save(paymentDetails);
   }
 }
