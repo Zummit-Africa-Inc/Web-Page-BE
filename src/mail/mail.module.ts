@@ -23,7 +23,7 @@ import { configConstant } from 'src/common/constants/config.constant';
           from: config.get(configConstant.mail.mail_from),
         },
         template: {
-          dir: join(__dirname, 'templates'),
+          dir: join(__dirname, './templates'),
           adapter: new HandlebarsAdapter(),
           options: {
             strict: true,

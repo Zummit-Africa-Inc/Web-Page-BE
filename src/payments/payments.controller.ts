@@ -19,8 +19,8 @@ export class PaymentsController {
 
   @ApiOperation({ summary: 'get item price' })
   @Get('get-price/:id')
-  async getPrice(@Param('id') id: string): Promise<Ok<number>> {
-    const price = await this.paymentService.getPrice(id);
+  async getPrice(@Param('id') id: string): Promise<Ok<any>> {
+    const price = await this.paymentService.getDetails(id);
     return ZuAppResponse.Ok(price, 'Success', '200');
   }
 }
