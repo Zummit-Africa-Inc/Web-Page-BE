@@ -71,15 +71,15 @@ export class PaymentService {
       const amount = result.data.data.amount;
       const courseId = result.data.data.metadata.course_id;
 
+      await this.savePayment(result.data.data);
       const courseDetails = await this.getDetails(courseId, true);
-      await this.mailService.sendPaymentConfirmation({
+      this.mailService.sendPaymentConfirmation({
         email,
         firstName,
         lastName,
         amount: amount / 100,
         ...courseDetails,
       });
-      await this.savePayment(result.data.data);
       const { data, ...response } = result.data;
       return { response };
     } catch (error) {
