@@ -107,12 +107,9 @@ export class CourseService {
           id,
         })
         .returning('*')
-        .execute()
-        .then((response) => {
-          return response.raw[0];
-        });
+        .execute();
 
-      return updatedCourse;
+      return updatedCourse.raw[0];
     } catch (error) {
       throw new BadRequestException(
         ZuAppResponse.BadRequest('Internal Server error', error.message, '500'),
