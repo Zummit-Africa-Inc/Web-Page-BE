@@ -3,6 +3,7 @@ import { ZuAppResponse } from 'src/common/helpers/response';
 import { CoursesRepository } from 'src/database/repository/courses.repository';
 import { Course } from 'src/entities/course.entity';
 import { CreateCourseDto } from './dto/create-course.dto';
+import { UpdateCourseDto } from './dto/update-course.dto';
 
 @Injectable()
 export class CourseService {
@@ -72,6 +73,46 @@ export class CourseService {
   async findAll(): Promise<Course[]> {
     try {
       return await this.coursesRepository.find();
+    } catch (error) {
+      throw new BadRequestException(
+        ZuAppResponse.BadRequest('Internal Server error', error.message, '500'),
+      );
+    }
+  }
+
+  /**
+   * It updates a course with the given id and body
+   * @param {string} id - string - the id of the course to be updated
+   * @param {UpdateCourseDto} body - UpdateCourseDto
+   * @returns The updated course
+   */
+  async update(id: string, body: UpdateCourseDto): Promise<Course> {
+    try {
+      const course = await this.coursesRepository.findOne(id);
+      if (!course) {
+        throw new BadRequestException(
+          ZuAppResponse.NotFoundRequest(
+            'Not Found',
+            'This course does not exist',
+          ),
+        );
+      }
+      if (body.rating) body.rating = parseFloat(body.rating.toFixed(1));
+      /* Updating the course with the given id and body. */
+      const updatedCourse = await this.coursesRepository
+        .createQueryBuilder()
+        .update(Course)
+        .set({ ...body })
+        .where('id = :id', {
+          id,
+        })
+        .returning('*')
+        .execute()
+        .then((response) => {
+          return response.raw[0];
+        });
+
+      return updatedCourse;
     } catch (error) {
       throw new BadRequestException(
         ZuAppResponse.BadRequest('Internal Server error', error.message, '500'),

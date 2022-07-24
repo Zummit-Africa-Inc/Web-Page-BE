@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
+  Patch,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Ok } from 'src/common/helpers/response/ResponseType';
@@ -12,6 +13,7 @@ import { ZuAppResponse } from 'src/common/helpers/response';
 import { Course } from 'src/entities/course.entity';
 import { CourseService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
+import { UpdateCourseDto } from './dto/update-course.dto';
 
 @ApiTags('Courses')
 @Controller('course')
@@ -39,5 +41,15 @@ export class CoursesController {
   async findAll(): Promise<Ok<Course[]>> {
     const courses = await this.coursesService.findAll();
     return ZuAppResponse.Ok(courses, 'Ok', '200');
+  }
+
+  @Patch('update/:id')
+  @ApiOperation({ summary: 'Update a course' })
+  async update(
+    @Body() body: UpdateCourseDto,
+    @Param('id') id: string,
+  ): Promise<Ok<Course>> {
+    const updatedCourse = await this.coursesService.update(id, body);
+    return ZuAppResponse.Ok(updatedCourse, 'Ok', '200');
   }
 }

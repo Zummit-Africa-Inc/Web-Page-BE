@@ -1,14 +1,12 @@
 import { ApiPropertyOptional, PartialType } from '@nestjs/swagger';
-import { IsArray } from 'class-validator';
 import { Difficulty } from '../../common/enums/difficulty.enum';
 import { CreateCourseDto } from './create-course.dto';
 
 export class UpdateCourseDto extends PartialType(CreateCourseDto) {
-  @IsArray()
   @ApiPropertyOptional()
   students: string[];
 
-  @ApiPropertyOptional({ nullable: true, default: 0 })
+  @ApiPropertyOptional()
   rating: number;
 
   @ApiPropertyOptional()
@@ -29,7 +27,6 @@ export class UpdateCourseDto extends PartialType(CreateCourseDto) {
   @ApiPropertyOptional()
   duration: number;
 
-  @IsArray()
   @ApiPropertyOptional()
   topics: string[];
 
