@@ -13,7 +13,11 @@ export class Course extends SharedEntity {
   @Column()
   price: number;
 
-  @Column({ nullable: true, default: 0 })
+  @Column({
+    default: 0,
+    type: 'float',
+    scale: 1,
+  })
   rating: number;
 
   @Column({ nullable: true })
