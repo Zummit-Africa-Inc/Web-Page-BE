@@ -4,6 +4,12 @@ import { CoursesRepository } from 'src/database/repository/courses.repository';
 import { Course } from 'src/entities/course.entity';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
+import {
+  FilterOperator,
+  PaginateQuery,
+  paginate,
+  Paginated,
+} from 'nestjs-paginate';
 
 @Injectable()
 export class CourseService {
@@ -115,5 +121,24 @@ export class CourseService {
         ZuAppResponse.BadRequest('Internal Server error', error.message, '500'),
       );
     }
+  }
+
+  /**
+   * It returns a paginated list of courses.
+   * @param {PaginateQuery} query - PaginateQuery - This is the query object that is passed in from the
+   * client.
+   * @returns A paginated object with the following properties:
+   */
+  search(query: PaginateQuery): Promise<Paginated<Course>> {
+    return paginate(query, this.coursesRepository, {
+      sortableColumns: ['title', 'tutor', 'description', 'rating'],
+      searchableColumns: ['title', 'tutor', 'description'],
+      filterableColumns: {
+        title: [FilterOperator.IN],
+        tutor: [FilterOperator.IN],
+        description: [FilterOperator.IN],
+        rating: [FilterOperator.GTE],
+      },
+    });
   }
 }

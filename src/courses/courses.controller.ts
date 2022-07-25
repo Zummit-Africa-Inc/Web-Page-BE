@@ -14,7 +14,7 @@ import { Course } from 'src/entities/course.entity';
 import { CourseService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
-
+import { PaginateQuery, Paginate, Paginated } from 'nestjs-paginate';
 @ApiTags('Courses')
 @Controller('course')
 export class CoursesController {
@@ -51,5 +51,14 @@ export class CoursesController {
   ): Promise<Ok<Course>> {
     const updatedCourse = await this.coursesService.update(id, body);
     return ZuAppResponse.Ok(updatedCourse, 'Ok', '200');
+  }
+
+  @Post('search')
+  @ApiOperation({ summary: 'Search or filter courses' })
+  async search(
+    @Paginate() query: PaginateQuery,
+  ): Promise<Ok<Paginated<Course>>> {
+    const result = await this.coursesService.search(query);
+    return ZuAppResponse.Ok(result, 'Ok', '200');
   }
 }
