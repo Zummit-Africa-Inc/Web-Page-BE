@@ -21,7 +21,7 @@
     <div class='content'>
       <section class='header'>
         Hi there
-        <span class='name'>{{firstName}}!</span>
+        <span class='name'>{{first_name}}!</span>
       </section>
       <section class='body'>
         <h4 class='company'>Zummit Africa Inc</h4>
@@ -37,12 +37,16 @@
           </h4>
           <div>
             <div class='detail'>
-              <p>Purchase email: </p>
-              <span>{{email}}</span>
+              <p>Email: </p>
+              <span> {{email}}</span>
+            </div>
+            <div class='detail'>
+              <p>Purchased Item: </p>
+              <span> {{title}} by {{tutor}}</span>
             </div>
             <div class='detail'>
               <p>Purchase amount: </p>
-              <span>NGN {{amount}}</span>
+              <span> NGN {{amount}}</span>
             </div>
           </div>
         </div>

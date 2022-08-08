@@ -1,7 +1,7 @@
 export interface Details {
   email: string;
-  firstName?: string;
-  lastName?: string;
+  first_name?: string;
+  last_name?: string;
   amount: number;
   tutor: string;
   title: string;
