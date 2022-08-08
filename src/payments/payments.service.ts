@@ -40,7 +40,6 @@ export class PaymentService {
         .digest('hex');
       if (hash === req.headers['x-paystack-signature']) {
         const event = req.body;
-        console.log(event.event);
 
         if (event.event === 'charge.success') {
           const { first_name, last_name, courseId } = event.data.metadata;
