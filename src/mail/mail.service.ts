@@ -36,10 +36,7 @@ export class MailService {
       subject: 'Course Purchase Confirmation',
       template: 'payment',
       context: {
-        email: details.email,
-        amount: details.amount,
-        firstName: details.firstName,
-        lastName: details.lastName,
+        ...details,
       },
     });
   }
