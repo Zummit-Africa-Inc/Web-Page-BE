@@ -31,8 +31,8 @@ export class MailService {
    */
   async sendPaymentConfirmation(details: Details) {
     await this.mailerService.sendMail({
-      to: details.email,
-      from: 'no_reply@zummitafrica.com',
+      to: [details.email, 'contact@zummitafrica.com'],
+      from: process.env.MAIL_FROM,
       subject: 'Course Purchase Confirmation',
       template: 'payment',
       context: {
