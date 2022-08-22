@@ -1,12 +1,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
+import { HttpService } from '@nestjs/axios';
 import { ZuAppResponse } from 'src/common/helpers/response';
 import { Verification } from 'src/common/Interfaces/payment.interface';
 import { CoursesRepository } from 'src/database/repository/courses.repository';
 import { Connection } from 'typeorm';
 import { MailService } from 'src/mail/mail.service';
 import { PaymentDetailsRepository } from 'src/database/repository/payments.repository';
+import { createHmac } from 'crypto';
+import { Request } from 'express';
 
 @Injectable()
 export class PaymentService {
@@ -25,10 +27,50 @@ export class PaymentService {
   }
 
   /**
-   * It takes a reference id as a parameter, makes a request to the paystack api to verify the
-   * transaction, and returns a response to the client
-   * @param {string} ref - This is the transaction reference id gotten from the paystack API.
-   * @returns A response to the client.
+   * It receives a request from paystack, verifies the request, saves the payment, sends a mail and
+   * returns a status code
+   * @param {Request} req - Request - This is the request object that contains the body of the request
+   * and the headers.
+   * @returns The return value is the status code of the response.
+   */
+  async webHook(req: Request): Promise<number> {
+    try {
+      const hash = createHmac('sha512', process.env.PAYSTACK_SECRET_KEY)
+        .update(JSON.stringify(req.body))
+        .digest('hex');
+      if (hash === req.headers['x-paystack-signature']) {
+        const event = req.body;
+
+        if (event.event === 'charge.success') {
+          const { first_name, last_name, courseId } = event.data.metadata;
+          const {
+            amount,
+            customer: { email },
+          } = event.data;
+
+          const courseDetails = await this.getDetails(courseId, true);
+          this.savePayment(req.body);
+          this.mailService.sendPaymentConfirmation({
+            email,
+            first_name,
+            last_name,
+            amount: amount / 100,
+            ...courseDetails,
+          });
+          return 200;
+        }
+      }
+    } catch (error) {
+      throw new BadRequestException(
+        ZuAppResponse.BadRequest('Internal Server error', error.message, '500'),
+      );
+    }
+  }
+
+  /**
+   * It verifies a payment reference and returns the response
+   * @param {string} ref - This is the reference code returned by the payment gateway.
+   * @returns The response from the paystack api.
    */
   async verify(ref: string): Promise<Verification> {
     try {
@@ -65,21 +107,7 @@ export class PaymentService {
           ),
         );
       }
-      const email = result.data.data.customer.email;
-      const firstName = result.data.data.metadata.first_name;
-      const lastName = result.data.data.metadata.last_name;
-      const amount = result.data.data.amount;
-      const courseId = result.data.data.metadata.course_id;
 
-      await this.savePayment(result.data.data);
-      const courseDetails = await this.getDetails(courseId, true);
-      this.mailService.sendPaymentConfirmation({
-        email,
-        firstName,
-        lastName,
-        amount: amount / 100,
-        ...courseDetails,
-      });
       const { data, ...response } = result.data;
       return { response };
     } catch (error) {
@@ -120,30 +148,30 @@ export class PaymentService {
 
   /**
    * It saves the payment details to the database
-   * @param {any} data - any
+   * @param {any} event - any
    */
-  async savePayment(data: any): Promise<void> {
+  async savePayment(event: any): Promise<void> {
     const info = {
-      paystackId: data.id,
-      status: data.status,
-      reference: data.reference,
-      amount: data.amount / 100,
-      gateway_response: data.gateway_response,
-      channel: data.channel,
-      currency: data.currency,
-      ip_address: data.ip_address,
-      fees: data.fees,
-      paidAt: data.paidAt,
-      metadata: data.metadata.referrer,
+      paystackId: event.data.id,
+      status: event.data.status,
+      reference: event.data.reference,
+      amount: event.data.amount / 100,
+      gateway_response: event.data.gateway_response,
+      channel: event.data.channel,
+      currency: event.data.currency,
+      ip_address: event.data.ip_address,
+      fees: event.data.fees,
+      paidAt: event.data.paidAt,
+      metadata: event.data.metadata.referrer,
     };
 
     const customer = {
-      id: data.customer.id,
-      first_name: data.customer.first_name,
-      last_name: data.customer.last_name,
-      email: data.customer.email,
-      customer_code: data.customer.customer_code,
-      phone: data.customer.phone,
+      id: event.data.customer.id,
+      first_name: event.data.customer.first_name,
+      last_name: event.data.customer.last_name,
+      email: event.data.customer.email,
+      customer_code: event.data.customer.customer_code,
+      phone: event.data.customer.phone,
     };
 
     const paymentDetails = this.paymentRepo.create({ ...info, customer });
