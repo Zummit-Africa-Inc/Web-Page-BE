@@ -33,7 +33,7 @@ export class MailService {
     await this.mailerService.sendMail({
       to: [details.email, 'contact@zummitafrica.com'],
       from: process.env.MAIL_FROM,
-      subject: 'Course Purchase Confirmation',
+      subject: 'Welcome to Zummit Africa Academy',
       template: 'payment',
       context: {
         ...details,
